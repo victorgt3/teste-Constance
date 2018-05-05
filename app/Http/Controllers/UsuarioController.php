@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Usuario;
+use App\Perfil;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+
 
 class UsuarioController extends Controller
 {
@@ -14,7 +18,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -35,7 +39,48 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        
+        $usuario = new Usuario();
+        $usuario->nome = $request->get('nome');
+        $usuario->email = $request->get('email');
+        $usuario->telefone = $request->get('telefone');
+        $usuario->dn = $request->get('dn');
+        $usuario->cargo = $request->get('cargo');
+        $usuario->salario = $request->get('salario');
+        
+        
+
+       if($request->hasFile('foto'))
+            
+         {
+            $file = $request->file('foto');
+            $diretorio = public_path('/upload');
+            Storage::makeDirectory($diretorio);
+            $extension = $file->getClientOriginalExtension();
+            $nomeArquivo = rand(11111,99999).".".$extension;
+            $file = Storage::directories($file->getRealPath());       
+            $file = $diretorio.'.'.$nomeArquivo;
+            $usuario->foto = $file;
+                     
+         }
+         
+         $usuario->save();
+
+         $produto = Usuario::find($usuario->id);
+         $id = $usuario->id;
+         $perfil =  new Perfil();
+         $perfil->usuario_id = $id;
+         $perfil->descricao = $request->get('descricao');
+         $perfil->nome_perfil = $request->get('nome_perfil');
+         $perfil->save();
+         
+            \Session::flash('flash_message',[
+                'msg'=>"Slide adicionado com Sucesso!",
+                'class'=>"alert-success"
+            ]);
+
+            return redirect()->action('WelcomeController@index');
     }
 
     /**
