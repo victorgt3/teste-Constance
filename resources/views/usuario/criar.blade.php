@@ -10,6 +10,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('usuarios.store') }}" enctype="multipart/form-data">
                         @csrf
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <input type="text" class="form-control" name="nome" value="" placeholder="Nome">
                         </div>

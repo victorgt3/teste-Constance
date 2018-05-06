@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Request;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use App\Usuario;
 use App\Perfil;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
+
 
 
 class UsuarioController extends Controller
@@ -55,16 +58,17 @@ class UsuarioController extends Controller
             
          {
             $file = $request->file('foto');
-            $diretorio = public_path('/upload');
-            Storage::makeDirectory($diretorio);
+            $diretorio = public_path('upload');
+            dd(Storage::makeDirectory($diretorio,0777,true,true));
             $extension = $file->getClientOriginalExtension();
             $nomeArquivo = rand(11111,99999).".".$extension;
-            $file = Storage::directories($file->getRealPath());       
-            $file = $diretorio.'.'.$nomeArquivo;
-            $usuario->foto = $file;
-                     
+            $file = Storage::directories($file->getRealPath());
+            Storage::download($diretorio.'/'.$nomeArquivo);       
+            $namefile = $diretorio.'.'.$nomeArquivo;
+            $file = $namefile;
+                 
          }
-         
+         $usuario->foto = $file;
          $usuario->save();
 
          $produto = Usuario::find($usuario->id);
