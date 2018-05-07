@@ -77,4 +77,12 @@ class UsuarioTest extends TestCase
         $this->assertGuest($usuarioPerfil, $result);
 
     }
+
+    public function test_create_usuario_using_form()
+    {
+        $this->get("/")
+            ->assertSee("Cadastrar Usuario")
+            
+            ;
+    }
 }
