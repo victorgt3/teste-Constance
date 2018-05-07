@@ -13,6 +13,7 @@
 
 Route::get('/','WelcomeController@index' );
 Route::resource('usuarios', 'UsuarioController');
+Route::get('/usuarios/destroy/{id}', ['uses'=>'UsuarioController@destroy','as'=>'usuarios.destroy']);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

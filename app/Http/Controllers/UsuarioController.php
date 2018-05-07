@@ -62,7 +62,9 @@ class UsuarioController extends Controller
             $destinationPath = public_path('/upload');
             $image->move($destinationPath, $name);
             $image = $destinationPath.'/'.$name;
-                 
+            $image = explode("/", $image);
+            $image = $image[1]."/".$image[2];
+             
          }
          
          $usuario->foto = $image;
@@ -101,9 +103,12 @@ class UsuarioController extends Controller
      * @param  \App\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function edit(Usuario $usuario)
+    public function edit($id)
     {
-        //
+        $perfil = Perfil::find($id);
+        $usuario = Usuario::find($id);
+
+        return view('usuario.editar',compact('perfil', 'usuario'));
     }
 
     /**
@@ -113,9 +118,47 @@ class UsuarioController extends Controller
      * @param  \App\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Usuario $usuario)
+    public function update(Request $request, $id)
     {
-        //
+        $usuario = Usuario::find($id);
+        $usuario->nome = $request->get('nome');
+        $usuario->email = $request->get('email');
+        $usuario->telefone = $request->get('telefone');
+        $usuario->dn = $request->get('dn');
+        $usuario->cargo = $request->get('cargo');
+        $usuario->salario = $request->get('salario');
+        
+        
+
+       if($request->hasFile('foto'))
+            
+         {
+            $image = $request->file('foto');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/upload');
+            $image->move($destinationPath, $name);
+            $image = $destinationPath.'/'.$name;
+            $image = explode("/", $image);
+            $image = $image[1]."/".$image[2];
+                 
+         }
+         $usuario->foto = $image;
+         $usuario->update();
+
+         $produto = Usuario::find($usuario->id);
+         $id = $usuario->id;
+         $perfil =  Perfil::find($id);
+         $perfil->usuario_id = $id;
+         $perfil->descricao = $request->get('descricao');
+         $perfil->nome_perfil = $request->get('nome_perfil');
+         $perfil->update();
+         
+            \Session::flash('flash_message',[
+                'msg'=>"Slide adicionado com Sucesso!",
+                'class'=>"alert-success"
+            ]);
+
+            return redirect()->action('WelcomeController@index');
     }
 
     /**
@@ -124,8 +167,18 @@ class UsuarioController extends Controller
      * @param  \App\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuario $usuario)
+    public function destroy($id)
     {
-        //
+        $usuario = Usuario::find($id);
+        $perfil = Perfil::find($id);
+        $perfil->delete();
+        $usuario->delete();
+        \Session::flash('flash_message',[
+			'msg'=>"Usuario foi deletado com Sucesso!",
+			'class'=>"alert-success"
+    	]);
+
+        return redirect()->action('WelcomeController@index');
+
     }
 }

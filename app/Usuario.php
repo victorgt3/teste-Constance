@@ -18,6 +18,16 @@ class Usuario extends Model
 
     public function perfil()
     {
-       return $this->hasMany('App\Perfil');
+       return $this->hasMany('App\Perfil','usuario_id');
+    }
+
+    public function deletarFotos()
+    {
+        foreach($this->perfil as $foto)
+        {
+             $foto->delete();
+        }
+ 
+        return true;
     }
 }

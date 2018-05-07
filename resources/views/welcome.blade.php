@@ -16,6 +16,7 @@
                             <tr>
                                 <th>Codigo</th>
                                 <th>Nome</th>
+                                <th>Telefone</th>
                                 <th>foto</th>
                                 <th>Ação</th>
                             </tr>
@@ -24,11 +25,11 @@
                                 <tr>
                                     <th>{{$usuarios->id}}</th>
                                     <td>{{$usuarios->nome}}</td>
-                                     <td><img src="{{url($usuarios->foto)}}"></td>
+                                    <td>{{$usuarios->telefone}}</td>
+                                     <td><img src="{{asset($usuarios->foto)}}" width="50"></td>
                                     <td>
                                         <a class="btn btn-info" href="{{route('usuarios.edit',$usuarios->id)}}">Editar</a>
                                         <a class="btn btn-danger" href="javascript:(confirm('Deseja deletar esse registro?') ? window.location.href='{{route('usuarios.destroy',$usuarios->id)}}' : FALSE)">Deletar</a>
-                                        <a class="btn btn-success" href="#">Detalhes</a>
                                     </td>
                                 </tr>                            
                             </tbody>
