@@ -57,18 +57,15 @@ class UsuarioController extends Controller
        if($request->hasFile('foto'))
             
          {
-            $file = $request->file('foto');
-            $diretorio = public_path('upload');
-            dd(Storage::makeDirectory($diretorio,0777,true,true));
-            $extension = $file->getClientOriginalExtension();
-            $nomeArquivo = rand(11111,99999).".".$extension;
-            $file = Storage::directories($file->getRealPath());
-            Storage::download($diretorio.'/'.$nomeArquivo);       
-            $namefile = $diretorio.'.'.$nomeArquivo;
-            $file = $namefile;
+            $image = $request->file('foto');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/upload');
+            $image->move($destinationPath, $name);
+            $image = $destinationPath.'/'.$name;
                  
          }
-         $usuario->foto = $file;
+         
+         $usuario->foto = $image;
          $usuario->save();
 
          $produto = Usuario::find($usuario->id);
