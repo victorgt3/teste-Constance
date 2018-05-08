@@ -17,6 +17,7 @@
                                 <th>Codigo</th>
                                 <th>Nome</th>
                                 <th>Telefone</th>
+                                <th>Nome Perfil</th>
                                 <th>foto</th>
                                 <th>Ação</th>
                             </tr>
@@ -26,6 +27,7 @@
                                     <th>{{$usuarios->id}}</th>
                                     <td>{{$usuarios->nome}}</td>
                                     <td>{{$usuarios->telefone}}</td>
+                                    <td>{{$usuarios->nome_perfil}}</td>
                                      <td><img src="{{asset($usuarios->foto)}}" width="50"></td>
                                     <td>
                                         <a class="btn btn-info" href="{{route('usuarios.edit',$usuarios->id)}}">Editar</a>
