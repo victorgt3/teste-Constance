@@ -79,7 +79,7 @@ class UsuarioController extends Controller
          $perfil->save();
          
             \Session::flash('flash_message',[
-                'msg'=>"Slide adicionado com Sucesso!",
+                'msg'=>"Usuario adicionado com Sucesso!",
                 'class'=>"alert-success"
             ]);
 
@@ -154,7 +154,7 @@ class UsuarioController extends Controller
          $perfil->update();
          
             \Session::flash('flash_message',[
-                'msg'=>"Slide adicionado com Sucesso!",
+                'msg'=>"Usuario foi atualizado com Sucesso!",
                 'class'=>"alert-success"
             ]);
 
