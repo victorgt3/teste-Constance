@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
+    protected $guarded = ['id'];
     protected $fillable = [
         'nome',
         'email',
@@ -21,13 +22,4 @@ class Usuario extends Model
        return $this->hasMany('App\Perfil','usuario_id');
     }
 
-    public function deletarFotos()
-    {
-        foreach($this->perfil as $foto)
-        {
-             $foto->delete();
-        }
- 
-        return true;
-    }
 }
