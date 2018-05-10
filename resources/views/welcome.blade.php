@@ -30,7 +30,7 @@
                                     <td>{{$usuarios->nome_perfil}}</td>
                                      <td><img src="{{asset($usuarios->foto)}}" width="50"></td>
                                     <td>
-                                        <a class="btn btn-info" href="{{route('usuarios.edit',$usuarios->id)}}">Editar</a>
+                                        <a class="btn btn-info" href="{{route('usuarios.edit', $usuarios->id)}}">Editar</a>
                                         <a class="btn btn-danger" href="javascript:(confirm('Deseja deletar esse registro?') ? window.location.href='{{route('usuarios.destroy',$usuarios->id)}}' : FALSE)">Deletar</a>
                                     </td>
                                 </tr>                            

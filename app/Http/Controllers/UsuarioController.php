@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
 use App\Usuario;
 use App\Perfil;
 
@@ -21,7 +19,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        
     }
 
     /**
@@ -107,7 +105,7 @@ class UsuarioController extends Controller
     {
         $perfil = Perfil::find($id);
         $usuario = Usuario::find($id);
-
+        
         return view('usuario.editar',compact('perfil', 'usuario'));
     }
 
